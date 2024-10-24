@@ -1,24 +1,48 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+/*-------------------------------- Constants --------------------------------*/
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const myQuestions = [
+  {
+    question: "Question 1?",
+    answers: {
+      a: "a",
+      b: "b",
+      c: "c"
+    },
+    correctAnswer: "c"
+  },
+  {
+    question: "Question 2?",
+    answers: {
+      a: "d",
+      b: "e",
+      c: "f"
+    },
+    correctAnswer: "d"
+  },
+  {
+    question: "Question 3?",
+    answers: {
+      a: "g",
+      b: "h",
+      c: "i",
+      d: "j"
+    },
+    correctAnswer: "i"
+  }
+];
 
-setupCounter(document.querySelector('#counter'))
+
+/*-------------------------------- Variables --------------------------------*/
+
+
+/*------------------------ Cached Element References ------------------------*/
+
+const quizContainer = document.getElementById('quiz');
+const resultsContainer = document.getElementById('results');
+const submitButton = document.getElementById('submit');
+
+/*-------------------------------- Functions --------------------------------*/
+
+
+/*----------------------------- Event Listeners -----------------------------*/
+
