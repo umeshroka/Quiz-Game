@@ -10,77 +10,69 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    
+
     <button id="start">Start Quiz!</button>
+  
 
-    <h3 id="choose">Choose your category</h3>
+    <section id="categoryContainer">
+      <h3 id="choose">Choose your category</h3>
 
-    <section>
+      <div>
       <button id="cat1" class="categories">Category 1</button>
       <button id="cat2" class="categories">Category 2</button>
-      <button id="cat3" class="categories">Category 3</button>
-      <button id="cat4" class="categories">Category 4</button>
-      <button id="cat5" class="categories">Category 5</button>
+      </div>
     </section>
 
-    <h4 id="question">What is the question?</h4>
+    <section id="questionContainer">
+      <h4 id="question">What is the question?</h4>
 
-    <div id="choices">
-      <button id="answer1" class="answers">Answer 1</button>
-      <button id="answer2" class="answers">Answer 2</button>
-      <button id="answer3" class="answers">Answer 3</button>
-      <button id="answer4" class="answers">Answer 4</button>
-    </div>
+      <div id="choices">
+        <button id="answer1" class="answers">Answer 1</button>
+        <button id="answer2" class="answers">Answer 2</button>
+        <button id="answer3" class="answers">Answer 3</button>
+        <button id="answer4" class="answers">Answer 4</button>
+      </div>
 
-    <h4 id="results">Wrong!/Correct! Explanation:</h4>
+      <button id="submit">Submit Answer</button>
 
-    <button id="submit">Submit Answer</button>
+      <h4 id="results">Wrong!/Correct! Explanation:</h4>
+    
+      <button id="nextQuestion">Next Question</button>
 
-    <button id="nextQuestion">Next Question</button>
+      <button id="nextCategory">Next Category</button>
+    </section>
 
-    <button id="nextCategory">Next Category</button>
+    <section id="quizEnd">
+      <h4 id="completed">Quiz Completed</h4>
 
-    <h4 id="completed">Quiz Completed</h4>
+      <button id="budget">Get budget</button>
+    </section>
 
-    <button id="budget">Get budget</button>
-
-    <table id="table">
-      <tr>
-        <th>Process</th>
-        <th>Hours</th>
-        <th>Budget</th>
-      </tr>
-      <tr>
-        <td>Category 1</td>
-        <td>5</td>
-        <td>$625</td>
-      </tr>
-      <tr>
-        <td>Category 2</td>
-        <td>10</td>
-        <td>$1250</td>
-      </tr>
-      <tr>
-        <td>Category 3</td>
-        <td>15</td>
-        <td>$1875</td>
-      </tr>
-      <tr>
-        <td>Category 4</td>
-        <td>20</td>
-        <td>$2500</td>
-      </tr>
-      <tr>
-        <td>Category 5</td>
-        <td>25</td>
-        <td>$3125</td>
-      </tr>
-      <tr>
-        <td>Total</td>
-        <td>65</td>
-        <td>$8125</td>
-      </tr>
-    </table>
-
+    <section id="budget">
+      <table id="table">
+        <tr>
+          <th>Process</th>
+          <th>Hours</th>
+          <th>Budget</th>
+        </tr>
+        <tr>
+          <td>Category 1</td>
+          <td>5</td>
+          <td>$625</td>
+        </tr>
+        <tr>
+          <td>Category 2</td>
+          <td>10</td>
+          <td>$1250</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td>65</td>
+          <td>$1875</td>
+        </tr>
+      </table>
+    </section>
 
   </body>
 </html>

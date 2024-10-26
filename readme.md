@@ -1,4 +1,4 @@
-# Idea for quiz game
+# Quiz game
 
 The idea is to create a project price estimator quiz.
 
@@ -27,7 +27,9 @@ The cost will be tallied up based on cost/hour and then, a final budget with hou
 1. When I arrive on the landing page, I want to see a Start Quiz button in the middle of the page.
 
 *initialize with all other elements hidden except for start quiz button*
+
 *store cached element reference for start quiz button, add an event listener with a function*
+
 *function will hid everything except the choose category element and display the categories buttons*
 
 2. When I press the start button, a few buttons to choose your category will show up.
