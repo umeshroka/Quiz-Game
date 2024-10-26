@@ -14,70 +14,85 @@ const myCategories = [
 const myQuestions = [
   {
     question: "Accounting Question 1?",
-    answers: {1: "a", 2: "b", 3: "c", 4: "d"},
+    answers: ["a", "b", "c", "d"],
     correctAnswer: "c",
+    semiCorrectAnswer: "d",
     category: "Accounting",
-    explanation: "xyz"
+    explanation: "yz"
   },
   {
     question: "Accounting Question 2?",
-    answers: {1: "e", 2: "f", 3: "g", 4: "h"},
+    answers: ["e", "f", "g", "h"],
     correctAnswer: "f",
+    semiCorrectAnswer: "g",
     category: "Accounting",
-    explanation: "xyz"
+    explanation: "yz"
 
   },
   {
     question: "Accounting Question 3?",
-    answers: {1: "i", 2: "j", 3: "k", 4: "l"},
+    answers: ["i", "j", "k", "l"],
     correctAnswer: "l",
+    semiCorrectAnswer: "i",
     category: "Accounting",
-    explanation: "xyz"
+    explanation: "yz"
   },
   {
     question: "Inventory Question 4?",
-    answers: {1: "a", 2: "b", 3: "c", 4: "d"},
-    correctAnswer: "c",
+    answers: ["m", "n", "o", "p"],
+    correctAnswer: "o",
+    semiCorrectAnswer: "n",
     category: "Inventory",
-    explanation: "xyz"
+    explanation: "yz"
   },
   {
     question: "Inventory Question 5?",
-    answers: {1: "e", 2: "f", 3: "g", 4: "h"},
-    correctAnswer: "f",
+    answers: ["q", "r", "s", "t"],
+    correctAnswer: "t",
+    semiCorrectAnswer: "r",
     category: "Inventory",
-    explanation: "xyz"
+    explanation: "yz"
 
   },
   {
     question: "Inventory Question 6?",
-    answers: {1: "i", 2: "j", 3: "k", 4: "l"},
-    correctAnswer: "l",
+    answers: ["u", "v", "w", "x"],
+    correctAnswer: "u",
+    semiCorrectAnswer: "x",
     category: "Inventory",
-    explanation: "xyz"
+    explanation: "yz"
   }
 ];
 
 
 /*-------------------------------- Variables --------------------------------*/
+let currentQuestion;
+let currentQuestionIndex = 0;
+let currentCategory;
+let currentCategoryIndex = 0;
 
+let score = 0;
 
 /*------------------------ Cached Element References ------------------------*/
 
-const start = document.getElementById('start');
+const startButton = document.getElementById('start');
 
 const categoryContainer = document.querySelector('#categoryContainer');
 const categories = document.querySelectorAll('.categories');
 
 const questionContainer = document.querySelector('#questionContainer');
-const question = document.querySelector('#question')
+const question = document.querySelector('#question');
+const answers = document.querySelectorAll('.answers');
 
-const resultsContainer = document.getElementById('results');
-const submitAnswerButton = document.getElementById('submit');
+const resultContainer = document.querySelector('#resultContainer');
+const result = document.querySelector('#results');
+const nextQuestionButton = document.querySelector('#nextQuestion');
+
+
 
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
-  start.classList.add("show");
+  startButton.classList.add("show");
 }
 
 
@@ -85,28 +100,54 @@ const displayCategories = () => {
   for (let i = 0; i < myCategories.length; i++) {
     categories[i].textContent = myCategories[i].category
   };
-  start.classList.add("hidden");
+  startButton.classList.add("hidden");
   categoryContainer.classList.add("show");
 }
 
-const displayFirstQuestion = (event) => {
+const displayQuestions = (event) => {
   categoryContainer.classList.remove("show");
-
-  if (event.target.textContent === myQuestions[0].category) {
-    question.textContent = myQuestions[0].question
-    
-  }
-  console.log(question)
-
   questionContainer.classList.add("show");
 
+  const relevantQuestions = myQuestions.filter((question) => {
+    return event.target.textContent === question.category;
+  })
+  currentQuestion = relevantQuestions[currentQuestionIndex];
+  question.textContent = currentQuestion.question;
+
+  for (let i = 0; i < answers.length; i++) {
+    answers[i].textContent = currentQuestion.answers[i]
+  }
+  };
+
+const checkAnswer = (event) => {
+  resultContainer.classList.add('show');
+  if (event.target.textContent === currentQuestion.correctAnswer) {
+    result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
+    score =+ 2;
+  } else if (event.target.textContent === currentQuestion.semiCorrectAnswer) {
+    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`
+    score =+ 1;
+  } else {
+    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`
+  }
+  currentQuestionIndex++;
+  console.log(score);
+  console.log(currentQuestionIndex)
 }
+  
+
+
 
 /*----------------------------- Event Listeners -----------------------------*/
 init();
 
-start.addEventListener('click', displayCategories);
+startButton.addEventListener('click', displayCategories);
 
 categories.forEach(category => {
-  category.addEventListener('click', displayFirstQuestion)
+  category.addEventListener('click', displayQuestions)
 });
+
+answers.forEach(answer => {
+  answer.addEventListener('click', checkAnswer)
+});
+
