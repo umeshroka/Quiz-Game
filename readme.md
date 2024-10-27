@@ -10,9 +10,9 @@ When they choose the category, there will be several questions testing the key c
 
 It will be a multiple choice quiz.
 
-There will be a correct answer that awards full points: 1.
+There will be a correct answer that awards full points: 2.
 
-There will be an answer that somewhat tells us that they have limited understanding awarding 0.5.
+There will be an answer that somewhat tells us that they have limited understanding awarding 1.
 
 Wrong aswers will be 0.
 
@@ -22,15 +22,9 @@ Then, a set number of hours will be given for various levels of understanding. 8
 
 The cost will be tallied up based on cost/hour and then, a final budget with hours will be displayed to the client. 
 
-# User stories + pseudocode 
+# User stories 
 
 1. When I arrive on the landing page, I want to see a Start Quiz button in the middle of the page.
-
-*initialize with all other elements hidden except for start quiz button*
-
-*store cached element reference for start quiz button, add an event listener with a function*
-
-*function will hid everything except the choose category element and display the categories buttons*
 
 2. When I press the start button, a few buttons to choose your category will show up.
 
@@ -59,9 +53,17 @@ The cost will be tallied up based on cost/hour and then, a final budget with hou
 
 # model / state
 
+categories will be an array of object. 
+categories = [{category: "Accounting", score: 0}, ...]
 
+questions will be an array of object. 
+questions 
 
+# pseudocode
 
+init() - create a function to display start quiz button 
 
+displayCategories() - create a function to create buttons: display all categories.category and append and attach event listener to each one. assign an id to each button start from 0. variable = currentCategoryIndex
 
+selectCategory (event) - assign the id as an index for the category
 

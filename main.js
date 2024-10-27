@@ -68,10 +68,9 @@ const myQuestions = [
 /*-------------------------------- Variables --------------------------------*/
 let currentQuestion;
 let currentQuestionIndex = 0;
-let currentCategory;
 let currentCategoryIndex = 0;
+let relevantQuestions = [];
 
-let score = 0;
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -84,7 +83,7 @@ const questionContainer = document.querySelector('#questionContainer');
 const question = document.querySelector('#question');
 const answers = document.querySelectorAll('.answers');
 
-const resultContainer = document.querySelector('#resultContainer');
+const resultContainer = document.querySelector('#resultContainer')
 const result = document.querySelector('#results');
 const nextQuestionButton = document.querySelector('#nextQuestion');
 
@@ -100,39 +99,57 @@ const displayCategories = () => {
   for (let i = 0; i < myCategories.length; i++) {
     categories[i].textContent = myCategories[i].category
   };
+ 
   startButton.classList.add("hidden");
   categoryContainer.classList.add("show");
 }
 
-const displayQuestions = (event) => {
+const chooseCategory = (event) => {
   categoryContainer.classList.remove("show");
   questionContainer.classList.add("show");
 
-  const relevantQuestions = myQuestions.filter((question) => {
-    return event.target.textContent === question.category;
-  })
+  currentCategoryIndex = event.target.id;
+
+  for (let i = 0; i < myQuestions.length; i++) {
+    if (event.target.textContent === myQuestions[i].category) {
+      relevantQuestions.push(myQuestions[i])
+    }
+  }
+  displayQuestion()
+}
+
+const displayQuestion = () => {
+ 
   currentQuestion = relevantQuestions[currentQuestionIndex];
   question.textContent = currentQuestion.question;
 
   for (let i = 0; i < answers.length; i++) {
     answers[i].textContent = currentQuestion.answers[i]
-  }
-  };
+  } 
+}
+
 
 const checkAnswer = (event) => {
   resultContainer.classList.add('show');
+
   if (event.target.textContent === currentQuestion.correctAnswer) {
     result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
-    score =+ 2;
+    myCategories[currentCategoryIndex].score =+ 2;
   } else if (event.target.textContent === currentQuestion.semiCorrectAnswer) {
     result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`
-    score =+ 1;
+    myCategories[currentCategoryIndex].score =+ 1;
   } else {
     result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`
   }
+
   currentQuestionIndex++;
-  console.log(score);
-  console.log(currentQuestionIndex)
+
+  if (currentQuestionIndex < relevantQuestions.length) {
+    displayQuestion();
+  } else {
+    displayCategories();
+  }
+
 }
   
 
@@ -144,10 +161,11 @@ init();
 startButton.addEventListener('click', displayCategories);
 
 categories.forEach(category => {
-  category.addEventListener('click', displayQuestions)
+  category.addEventListener('click', chooseCategory)
 });
 
 answers.forEach(answer => {
   answer.addEventListener('click', checkAnswer)
 });
 
+nextQuestionButton.addEventListener('click', displayQuestion);
