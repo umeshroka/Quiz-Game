@@ -11,20 +11,20 @@
   </head>
   <body>
     
+    <div id="start">
+      <button>Start Quiz!</button>
+    </div>
+    
 
-    <button id="start">Start Quiz!</button>
-  
+    <div id="categoryContainer">
+      <h3>Select a Category</h3>
 
-    <section id="categoryContainer">
-      <h3 id="choose">Choose your category</h3>
-
-      <div>
       <button id="0" class="categories">Category 1</button>
       <button id="1" class="categories">Category 2</button>
-      </div>
-    </section>
+    
+    </div>
 
-    <section id="questionContainer">
+    <div id="questionContainer">
       <h4 id="question">What is the question?</h4>
 
       <div id="choices">
@@ -34,25 +34,27 @@
         <button id="answer4" class="answers">Answer 4</button>
       </div>
 
-    </section>
+    </div>
 
-    <section id="resultContainer">
+    <div id="resultContainer">
       <h4 id="results">Wrong!/Correct! Explanation:</h4>
-    
+    </div>
+
+    <div id="nextQuestionContainer">
       <button id="nextQuestion">Next Question</button>
-    </section>
+    </div>
 
-    <section id="changeCategory">
+    <div id="nextCategoryContainer">
       <button id="nextCategory">Next Category</button>
-    </section>
+    </div>
 
-    <section id="quizEnd">
+    <div id="quizEnd">
       <h4 id="completed">Quiz Completed</h4>
 
       <button id="budget">Get budget</button>
-    </section>
+    </div>
 
-    <section id="budgetTable">
+    <div id="budgetTable">
       <table id="table">
         <tr>
           <th>Process</th>
@@ -60,22 +62,22 @@
           <th>Budget</th>
         </tr>
         <tr>
-          <td>Category 1</td>
-          <td>5</td>
-          <td>$625</td>
+          <td class="budgetCategory">Category 1</td>
+          <td class="budgetHours">5</td>
+          <td class="budgetCost'">$625</td>
         </tr>
         <tr>
-          <td>Category 2</td>
-          <td>10</td>
-          <td>$1250</td>
+          <td class="budgetCategory">Category 2</td>
+          <td class="budgetHours">10</td>
+          <td class="budgetCost">$1250</td>
         </tr>
         <tr>
           <td>Total</td>
-          <td>65</td>
-          <td>$1875</td>
+          <td id="totalHours">65</td>
+          <td id="totalCost">$1875</td>
         </tr>
       </table>
-    </section>
+    </div>
 
   </body>
 </html>

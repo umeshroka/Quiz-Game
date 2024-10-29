@@ -10,7 +10,7 @@ body {
   min-height: 50vh;
 }
 
-section {
+div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -46,6 +46,6 @@ th, td {
   display: block;
 }
 
-.hidden {
+.hide {
   display: none;
 }

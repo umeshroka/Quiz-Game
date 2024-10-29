@@ -3,11 +3,13 @@
 const myCategories = [
   {
     category: "Accounting",
-    score: 0
+    score: 0,
+    completed: false,
   },
   {
     category: "Inventory",
-    score: 0
+    score: 0,
+    completed: false,
   },
 ];
 
@@ -64,43 +66,87 @@ const myQuestions = [
   }
 ];
 
+// const myScores = [
+//   {
+//     score: [0,1,2],
+//     hours: 24,
+//     cost: ratePerHour * 24
+//   },
+//   {
+//     score: [3,4],
+//     hours: 16
+//   },
+//   {
+//     score: [5,6],
+//     hours: 8
+//   }
+// ]
 
+const ratePerHour = 125
 /*-------------------------------- Variables --------------------------------*/
+let currentCategoryIndex;
+let CategoryCount = 0;
+
+
 let currentQuestion;
 let currentQuestionIndex = 0;
-let currentCategoryIndex = 0;
 let relevantQuestions = [];
 
 
 /*------------------------ Cached Element References ------------------------*/
 
-const startButton = document.getElementById('start');
+const start = document.querySelector('#start');
 
 const categoryContainer = document.querySelector('#categoryContainer');
 const categories = document.querySelectorAll('.categories');
 
 const questionContainer = document.querySelector('#questionContainer');
 const question = document.querySelector('#question');
-const answers = document.querySelectorAll('.answers');
+const answerButtons = document.querySelectorAll('.answers');
 
 const resultContainer = document.querySelector('#resultContainer')
 const result = document.querySelector('#results');
+
 const nextQuestionButton = document.querySelector('#nextQuestion');
+const nextQuestionContainer = document.querySelector('#nextQuestionContainer');
 
+const nextCategoryButton = document.querySelector('#nextCategory');
+const nextCategoryContainer = document.querySelector('#nextCategoryContainer');
 
+const quizEnd = document.querySelector('#quizEnd');
+
+const budget = document.querySelector('#budget');
+const budgetTable = document.querySelector('#budgetTable');
+
+const budgetCategories = document.querySelectorAll('.budgetCategory')
+const budgetHours = document.querySelectorAll('.budgetHours')
+const budgetCost = document.querySelectorAll('.budgetCost')
+
+const totalHours = document.querySelector('#totalHours')
+const totalCost = document.querySelector('#totalCost')
 
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
-  startButton.classList.add("show");
+  start.classList.add("show");
 }
 
+init();
 
 const displayCategories = () => {
+
+// currently, it displays all categories which is fine for the first time.
+// but after they have chosen the category, the next time should only have 1 category.
+// means this html should just be a container, and the number of buttons to display is based on conditions
+// and create elements and append 
+
   for (let i = 0; i < myCategories.length; i++) {
     categories[i].textContent = myCategories[i].category
   };
  
-  startButton.classList.add("hidden");
+  start.classList.remove("show");
+  questionContainer.classList.remove("show");
+  resultContainer.classList.remove('show');
+  nextCategoryContainer.classList.remove('show');
   categoryContainer.classList.add("show");
 }
 
@@ -115,16 +161,21 @@ const chooseCategory = (event) => {
       relevantQuestions.push(myQuestions[i])
     }
   }
-  displayQuestion()
+
+  CategoryCount++;
+
+  displayQuestion();
 }
 
 const displayQuestion = () => {
+  resultContainer.classList.remove('show');
+  nextQuestionContainer.classList.remove('show');
  
   currentQuestion = relevantQuestions[currentQuestionIndex];
   question.textContent = currentQuestion.question;
 
-  for (let i = 0; i < answers.length; i++) {
-    answers[i].textContent = currentQuestion.answers[i]
+  for (let i = 0; i < answerButtons.length; i++) {
+    answerButtons[i].textContent = currentQuestion.answers[i]
   } 
 }
 
@@ -134,38 +185,64 @@ const checkAnswer = (event) => {
 
   if (event.target.textContent === currentQuestion.correctAnswer) {
     result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
-    myCategories[currentCategoryIndex].score =+ 2;
+    myCategories[currentCategoryIndex].score += 2;
   } else if (event.target.textContent === currentQuestion.semiCorrectAnswer) {
-    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`
-    myCategories[currentCategoryIndex].score =+ 1;
+    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`;
+    myCategories[currentCategoryIndex].score += 1;
   } else {
-    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`
+    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`;
   }
 
   currentQuestionIndex++;
 
   if (currentQuestionIndex < relevantQuestions.length) {
-    displayQuestion();
+    nextQuestionContainer.classList.add('show');
+  } else if (CategoryCount < myCategories.length) {
+    nextCategoryContainer.classList.add('show');
   } else {
-    displayCategories();
+    quizEnd.classList.add("show");
   }
-
 }
   
 
+const displayBudgetTable = () => {
+  questionContainer.classList.remove('show');
+  resultContainer.classList.remove('show');
+  quizEnd.classList.remove('show');
+  budgetTable.classList.add("show");
 
+  for (let i = 0; i < budgetCategories.length; i++) {
+    budgetCategories[i].textContent = myCategories[i].category
+  }
+
+  for (let i = 0; i < budgetHours.length; i++) {
+    if (myCategories[i].score < 3 ) {
+      budgetHours[i].textContent = 24;
+    } else if (myCategories[i].score > 4) {
+      budgetHours[i].textContent = 8;
+    } else {
+      budgetHours[i].textContent = 16;
+    }
+  }
+
+
+}
 
 /*----------------------------- Event Listeners -----------------------------*/
-init();
 
-startButton.addEventListener('click', displayCategories);
+
+start.addEventListener('click', displayCategories);
 
 categories.forEach(category => {
   category.addEventListener('click', chooseCategory)
 });
 
-answers.forEach(answer => {
+answerButtons.forEach(answer => {
   answer.addEventListener('click', checkAnswer)
 });
 
 nextQuestionButton.addEventListener('click', displayQuestion);
+
+nextCategoryButton.addEventListener('click', displayCategories);
+
+budget.addEventListener('click', displayBudgetTable);
