@@ -166,7 +166,8 @@ const displayQuestion = () => {
   question.textContent = currentQuestion.question;
 
   for (let i = 0; i < answerButtons.length; i++) {
-    answerButtons[i].textContent = currentQuestion.answers[i]
+    answerButtons[i].textContent = currentQuestion.answers[i];
+    answerButtons[i].disabled = false;
   } 
 }
 
@@ -175,6 +176,10 @@ const checkAnswer = (event) => {
   
   showOnlyContainer(resultContainer);
   questionContainer.classList.add('show');
+
+  answerButtons.forEach(button => {
+    button.disabled = true;
+  });
 
   if (event.target.textContent === currentQuestion.correctAnswer) {
     result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
