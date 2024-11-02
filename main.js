@@ -9,7 +9,7 @@ const myCategories = [
   {
     category: "Inventory",
     score: 0,
-    completed: false,
+    completed: false
   },
 ];
 
@@ -66,22 +66,6 @@ const myQuestions = [
   }
 ];
 
-// const myScores = [
-//   {
-//     score: [0,1,2],
-//     hours: 24,
-//     cost: ratePerHour * 24
-//   },
-//   {
-//     score: [3,4],
-//     hours: 16
-//   },
-//   {
-//     score: [5,6],
-//     hours: 8
-//   }
-// ]
-
 const ratePerHour = 125
 /*-------------------------------- Variables --------------------------------*/
 let currentCategoryIndex;
@@ -95,10 +79,9 @@ let relevantQuestions = [];
 
 /*------------------------ Cached Element References ------------------------*/
 
-const start = document.querySelector('#start');
+const startButton = document.querySelector('#start');
 
 const categoryContainer = document.querySelector('#categoryContainer');
-const categories = document.querySelectorAll('.categories');
 
 const questionContainer = document.querySelector('#questionContainer');
 const question = document.querySelector('#question');
@@ -115,39 +98,42 @@ const nextCategoryContainer = document.querySelector('#nextCategoryContainer');
 
 const quizEnd = document.querySelector('#quizEnd');
 
-const budget = document.querySelector('#budget');
+const budgetButton = document.querySelector('#budget');
+
 const budgetTable = document.querySelector('#budgetTable');
 
-const budgetCategories = document.querySelectorAll('.budgetCategory')
-const budgetHours = document.querySelectorAll('.budgetHours')
-const budgetCost = document.querySelectorAll('.budgetCost')
-
-const totalHours = document.querySelector('#totalHours')
-const totalCost = document.querySelector('#totalCost')
+const budgetTableBody = document.querySelector('#budgetTableBody');
 
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
-  start.classList.add("show");
+  startButton.classList.add("show");
 }
 
 init();
 
 const displayCategories = () => {
 
-// currently, it displays all categories which is fine for the first time.
-// but after they have chosen the category, the next time should only have 1 category.
-// means this html should just be a container, and the number of buttons to display is based on conditions
-// and create elements and append 
-
-  for (let i = 0; i < myCategories.length; i++) {
-    categories[i].textContent = myCategories[i].category
-  };
- 
-  start.classList.remove("show");
+  startButton.classList.remove("show");
   questionContainer.classList.remove("show");
   resultContainer.classList.remove('show');
   nextCategoryContainer.classList.remove('show');
   categoryContainer.classList.add("show");
+
+  categoryContainer.innerHTML = '<h3>Select a Category</h3>';
+
+  for (let i = 0; i < myCategories.length; i++) {
+
+    if (!myCategories[i].completed) {
+
+      const categories = document.createElement("button");
+      categories.textContent = myCategories[i].category;
+      categories.id = i;
+      categoryContainer.appendChild(categories);
+      categories.addEventListener('click', chooseCategory)
+
+    }
+  };
+ 
 }
 
 const chooseCategory = (event) => {
@@ -163,7 +149,6 @@ const chooseCategory = (event) => {
   }
 
   CategoryCount++;
-
   displayQuestion();
 }
 
@@ -198,12 +183,12 @@ const checkAnswer = (event) => {
   if (currentQuestionIndex < relevantQuestions.length) {
     nextQuestionContainer.classList.add('show');
   } else if (CategoryCount < myCategories.length) {
+    myCategories[currentCategoryIndex].completed = true;
     nextCategoryContainer.classList.add('show');
   } else {
     quizEnd.classList.add("show");
   }
 }
-  
 
 const displayBudgetTable = () => {
   questionContainer.classList.remove('show');
@@ -211,31 +196,67 @@ const displayBudgetTable = () => {
   quizEnd.classList.remove('show');
   budgetTable.classList.add("show");
 
-  for (let i = 0; i < budgetCategories.length; i++) {
-    budgetCategories[i].textContent = myCategories[i].category
-  }
+  budgetTableBody.innerHTML = "";
 
-  for (let i = 0; i < budgetHours.length; i++) {
-    if (myCategories[i].score < 3 ) {
-      budgetHours[i].textContent = 24;
-    } else if (myCategories[i].score > 4) {
-      budgetHours[i].textContent = 8;
+  let totalHours = 0;
+  let totalCost = 0;
+
+  for (let i = 0; i < myCategories.length; i++) {
+    const row = document.createElement('tr');
+
+    const categoryCell = document.createElement('td');
+    categoryCell.textContent = myCategories[i].category;
+    row.appendChild(categoryCell);
+
+    const relevantQuestionsInCategory = myQuestions.filter(q => q.category === myCategories[i].category);
+    const questionCount = relevantQuestionsInCategory.length;
+    
+    let hours;
+    if (myCategories[i].score/questionCount < 1) {
+      hours = 24; 
+    } else if (myCategories[i].score/questionCount > 1.5) {
+      hours = 8; 
     } else {
-      budgetHours[i].textContent = 16;
+      hours = 16;
     }
+
+    const hoursCell = document.createElement('td');
+    hoursCell.textContent = hours;
+    row.appendChild(hoursCell);
+
+    const cost = hours * ratePerHour;
+    totalHours += hours;
+    totalCost += cost;
+
+    const costCell = document.createElement('td');
+    costCell.textContent = `$${cost}`; 
+    row.appendChild(costCell);
+
+    budgetTableBody.appendChild(row);
   }
 
+  const totalRow = document.createElement('tr');
+  const totalCell = document.createElement('td');
+  totalCell.textContent = 'Total';
+  totalCell.colSpan = 1;
+  totalRow.appendChild(totalCell);
 
-}
+  const totalHoursCell = document.createElement('td');
+  totalHoursCell.textContent = totalHours;
+  totalRow.appendChild(totalHoursCell);
+
+  const totalCostCell = document.createElement('td');
+  totalCostCell.textContent = `$${totalCost}`; // Format total cost as currency
+  totalRow.appendChild(totalCostCell);
+
+  budgetTableBody.appendChild(totalRow);
+
+  }
 
 /*----------------------------- Event Listeners -----------------------------*/
 
 
-start.addEventListener('click', displayCategories);
-
-categories.forEach(category => {
-  category.addEventListener('click', chooseCategory)
-});
+startButton.addEventListener('click', displayCategories);
 
 answerButtons.forEach(answer => {
   answer.addEventListener('click', checkAnswer)
@@ -245,4 +266,4 @@ nextQuestionButton.addEventListener('click', displayQuestion);
 
 nextCategoryButton.addEventListener('click', displayCategories);
 
-budget.addEventListener('click', displayBudgetTable);
+budgetButton.addEventListener('click', displayBudgetTable);
