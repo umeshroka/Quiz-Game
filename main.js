@@ -79,6 +79,8 @@ let relevantQuestions = [];
 
 /*------------------------ Cached Element References ------------------------*/
 
+const allDivs = document.querySelectorAll('div');
+
 const startButton = document.querySelector('#start');
 
 const categoryContainer = document.querySelector('#categoryContainer');
@@ -104,20 +106,24 @@ const budgetTable = document.querySelector('#budgetTable');
 
 const budgetTableBody = document.querySelector('#budgetTableBody');
 
+const resetButton = document.querySelector('#resetButton')
+
 /*-------------------------------- Functions --------------------------------*/
-const init = () => {
-  startButton.classList.add("show");
+const showOnlyContainer = (container) => {
+  allDivs.forEach(div => {
+    div.classList.remove('show');
+  });
+  container.classList.add('show');
 }
 
-init();
+const init = () => {
+  showOnlyContainer(startButton);
+}
+
 
 const displayCategories = () => {
 
-  startButton.classList.remove("show");
-  questionContainer.classList.remove("show");
-  resultContainer.classList.remove('show');
-  nextCategoryContainer.classList.remove('show');
-  categoryContainer.classList.add("show");
+  showOnlyContainer(categoryContainer);
 
   categoryContainer.innerHTML = '<h3>Select a Category</h3>';
 
@@ -137,8 +143,8 @@ const displayCategories = () => {
 }
 
 const chooseCategory = (event) => {
-  categoryContainer.classList.remove("show");
-  questionContainer.classList.add("show");
+ 
+  showOnlyContainer(questionContainer);
 
   currentCategoryIndex = event.target.id;
 
@@ -153,8 +159,8 @@ const chooseCategory = (event) => {
 }
 
 const displayQuestion = () => {
-  resultContainer.classList.remove('show');
-  nextQuestionContainer.classList.remove('show');
+
+  showOnlyContainer(questionContainer);
  
   currentQuestion = relevantQuestions[currentQuestionIndex];
   question.textContent = currentQuestion.question;
@@ -166,7 +172,9 @@ const displayQuestion = () => {
 
 
 const checkAnswer = (event) => {
-  resultContainer.classList.add('show');
+  
+  showOnlyContainer(resultContainer);
+  questionContainer.classList.add('show');
 
   if (event.target.textContent === currentQuestion.correctAnswer) {
     result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
@@ -191,10 +199,9 @@ const checkAnswer = (event) => {
 }
 
 const displayBudgetTable = () => {
-  questionContainer.classList.remove('show');
-  resultContainer.classList.remove('show');
-  quizEnd.classList.remove('show');
-  budgetTable.classList.add("show");
+
+  showOnlyContainer(budgetTable);
+  resetButton.classList.add("show");
 
   budgetTableBody.innerHTML = "";
 
@@ -253,8 +260,29 @@ const displayBudgetTable = () => {
 
   }
 
+  const resetQuiz = () => {
+    myCategories.forEach(category => {
+      category.score = 0;
+      category.completed = false;
+    });
+  
+    currentCategoryIndex = 0;
+    CategoryCount = 0;
+    currentQuestionIndex = 0;
+    relevantQuestions = [];
+  
+    result.textContent = '';
+    question.textContent = '';
+    answerButtons.forEach(button => button.textContent = '');
+  
+    // Show the start button again
+    showOnlyContainer(startButton);
+  }
+  
+
 /*----------------------------- Event Listeners -----------------------------*/
 
+init();
 
 startButton.addEventListener('click', displayCategories);
 
@@ -267,3 +295,5 @@ nextQuestionButton.addEventListener('click', displayQuestion);
 nextCategoryButton.addEventListener('click', displayCategories);
 
 budgetButton.addEventListener('click', displayBudgetTable);
+
+resetButton.addEventListener('click', resetQuiz)
