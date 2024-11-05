@@ -8,6 +8,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 50vh;
+  background-color: antiquewhite;
 }
 
 div {
@@ -16,7 +17,7 @@ div {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  display: none;
+  /* display: none; */
 }
 
 #choices {
@@ -26,11 +27,16 @@ div {
 
 button{
   margin: 10px;
-  background-color: rgb(123, 189, 123);
+  background-color: rgb(137, 205, 137);
 }
 
-table, th, td {
-  border: 1px solid white;
+.answers {
+  text-align: left;
+  width: 700px;
+}
+
+/* table, th, td {
+  border: 1px solid antiquewhite;
   border-collapse: collapse;
   text-align: center;
   width: 300px;
@@ -39,13 +45,9 @@ table, th, td {
 }
 
 th, td {
-  background-color: #96D4D4;
-}
+  background-color: rgb(137, 205, 137);
+} */
 
 .show {
   display: block;
-}
-
-.hide {
-  display: none;
 }

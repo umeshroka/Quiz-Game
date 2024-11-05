@@ -13,60 +13,14 @@ const myCategories = [
   },
 ];
 
-const myQuestions = [
-  {
-    question: "Accounting Question 1?",
-    answers: ["a", "b", "c", "d"],
-    correctAnswer: "c",
-    semiCorrectAnswer: "d",
-    category: "Accounting",
-    explanation: "yz"
-  },
-  {
-    question: "Accounting Question 2?",
-    answers: ["e", "f", "g", "h"],
-    correctAnswer: "f",
-    semiCorrectAnswer: "g",
-    category: "Accounting",
-    explanation: "yz"
-
-  },
-  {
-    question: "Accounting Question 3?",
-    answers: ["i", "j", "k", "l"],
-    correctAnswer: "l",
-    semiCorrectAnswer: "i",
-    category: "Accounting",
-    explanation: "yz"
-  },
-  {
-    question: "Inventory Question 4?",
-    answers: ["m", "n", "o", "p"],
-    correctAnswer: "o",
-    semiCorrectAnswer: "n",
-    category: "Inventory",
-    explanation: "yz"
-  },
-  {
-    question: "Inventory Question 5?",
-    answers: ["q", "r", "s", "t"],
-    correctAnswer: "t",
-    semiCorrectAnswer: "r",
-    category: "Inventory",
-    explanation: "yz"
-
-  },
-  {
-    question: "Inventory Question 6?",
-    answers: ["u", "v", "w", "x"],
-    correctAnswer: "u",
-    semiCorrectAnswer: "x",
-    category: "Inventory",
-    explanation: "yz"
-  }
-];
+import { myQuestions } from "./questions";
 
 const ratePerHour = 125
+
+const yay = new Audio ("assets/yay-6326.mp3")
+const sigh = new Audio ("assets/sigh-groan-92290.mp3")
+const fanfare = new Audio ("assets/tada-fanfare-a-6313.mp3")
+
 /*-------------------------------- Variables --------------------------------*/
 let currentCategoryIndex;
 let CategoryCount = 0;
@@ -109,11 +63,13 @@ const budgetTableBody = document.querySelector('#budgetTableBody');
 const resetButton = document.querySelector('#resetButton')
 
 /*-------------------------------- Functions --------------------------------*/
-const showOnlyContainer = (container) => {
+const showOnlyContainer = (...containers) => {
   allDivs.forEach(div => {
     div.classList.remove('show');
   });
-  container.classList.add('show');
+  containers.forEach(container => {
+    container.classList.add('show');
+  });
 }
 
 const init = () => {
@@ -174,9 +130,8 @@ const displayQuestion = () => {
 
 const checkAnswer = (event) => {
   
-  showOnlyContainer(resultContainer);
-  questionContainer.classList.add('show');
-
+  showOnlyContainer(questionContainer, resultContainer);
+ 
   answerButtons.forEach(button => {
     button.disabled = true;
   });
@@ -184,10 +139,13 @@ const checkAnswer = (event) => {
   if (event.target.textContent === currentQuestion.correctAnswer) {
     result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
     myCategories[currentCategoryIndex].score += 2;
+    yay.volume = .05;
+    yay.play();
   } else if (event.target.textContent === currentQuestion.semiCorrectAnswer) {
     result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`;
     myCategories[currentCategoryIndex].score += 1;
   } else {
+    sigh.play();
     result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`;
   }
 
@@ -195,18 +153,21 @@ const checkAnswer = (event) => {
 
   if (currentQuestionIndex < relevantQuestions.length) {
     nextQuestionContainer.classList.add('show');
+    showOnlyContainer(questionContainer, resultContainer, nextQuestionContainer);
   } else if (CategoryCount < myCategories.length) {
     myCategories[currentCategoryIndex].completed = true;
-    nextCategoryContainer.classList.add('show');
+    showOnlyContainer(questionContainer, resultContainer, nextCategoryContainer);
   } else {
-    quizEnd.classList.add("show");
+    showOnlyContainer(questionContainer, resultContainer, quizEnd);
   }
 }
 
 const displayBudgetTable = () => {
 
-  showOnlyContainer(budgetTable);
-  resetButton.classList.add("show");
+  fanfare.volume = .05;
+  fanfare.play();
+
+  showOnlyContainer(budgetTable, resetButton);
 
   budgetTableBody.innerHTML = "";
 
@@ -280,7 +241,6 @@ const displayBudgetTable = () => {
     question.textContent = '';
     answerButtons.forEach(button => button.textContent = '');
   
-    // Show the start button again
     showOnlyContainer(startButton);
   }
   
