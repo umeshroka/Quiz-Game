@@ -49,7 +49,7 @@ The cost will be tallied up based on cost/hour and then, a final budget with hou
 
 # wireframes / html + css
 
-![wireframe](assets/Wireframe.jpg)
+![wireframe](/Wireframe.jpg)
 
 # model / state
 

@@ -17,10 +17,10 @@ import { myQuestions } from "./questions";
 
 const ratePerHour = 125
 
-const yay = new Audio ("assets/yay-6326.mp3")
-const ok = new Audio ("assets/solo-clap-90129.mp3")
-const sigh = new Audio ("assets/sigh-groan-92290.mp3")
-const fanfare = new Audio ("assets/tada-fanfare-a-6313.mp3")
+const yay = new Audio ("/yay-6326.mp3")
+const ok = new Audio ("/solo-clap-90129.mp3")
+const sigh = new Audio ("/sigh-groan-92290.mp3")
+const fanfare = new Audio ("/tada-fanfare-a-6313.mp3")
 
 /*-------------------------------- Variables --------------------------------*/
 let currentCategoryIndex;
