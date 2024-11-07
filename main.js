@@ -18,6 +18,7 @@ import { myQuestions } from "./questions";
 const ratePerHour = 125
 
 const yay = new Audio ("assets/yay-6326.mp3")
+const ok = new Audio ("assets/solo-clap-90129.mp3")
 const sigh = new Audio ("assets/sigh-groan-92290.mp3")
 const fanfare = new Audio ("assets/tada-fanfare-a-6313.mp3")
 
@@ -45,6 +46,7 @@ const answerButtons = document.querySelectorAll('.answers');
 
 const resultContainer = document.querySelector('#resultContainer')
 const result = document.querySelector('#results');
+const explanation = document.querySelector('#explanation');
 
 const nextQuestionButton = document.querySelector('#nextQuestion');
 const nextQuestionContainer = document.querySelector('#nextQuestionContainer');
@@ -81,7 +83,7 @@ const displayCategories = () => {
 
   showOnlyContainer(categoryContainer);
 
-  categoryContainer.innerHTML = '<h3>Select a Category</h3>';
+  categoryContainer.innerHTML = '<h1 class="display-5">Choose Your Category</h1>';
 
   for (let i = 0; i < myCategories.length; i++) {
 
@@ -90,6 +92,9 @@ const displayCategories = () => {
       const categories = document.createElement("button");
       categories.textContent = myCategories[i].category;
       categories.id = i;
+      categories.classList.add("btn");
+      categories.classList.add("btn-outline-success");
+      categories.classList.add("btn-lg");
       categoryContainer.appendChild(categories);
       categories.addEventListener('click', chooseCategory)
 
@@ -137,16 +142,20 @@ const checkAnswer = (event) => {
   });
 
   if (event.target.textContent === currentQuestion.correctAnswer) {
-    result.textContent = `Correct! Explanation: ${currentQuestion.explanation}`;
+    result.textContent = "Correct!" 
+    explanation.textContent= `${currentQuestion.explanation}`;
     myCategories[currentCategoryIndex].score += 2;
     yay.volume = .05;
     yay.play();
   } else if (event.target.textContent === currentQuestion.semiCorrectAnswer) {
-    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`;
+    result.textContent = "Somewhat Correct!" 
+    explanation.textContent= `${currentQuestion.explanation}`;
     myCategories[currentCategoryIndex].score += 1;
+    ok.play();
   } else {
     sigh.play();
-    result.textContent = `Wrong! Explanation: ${currentQuestion.explanation}`;
+    result.textContent = "Wrong!" 
+    explanation.textContent= `${currentQuestion.explanation}`;
   }
 
   currentQuestionIndex++;
