@@ -19,11 +19,14 @@ div {
   display: none;
 }
 
-
-
-#choices {
+section {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+}
+
+th {
+  font-size: xx-large;
+  text-align: left;
 }
 
 button{
@@ -35,11 +38,15 @@ button{
   width: 700px;
 }
 
-
 .show {
   display: block;
 }
 
 .lead {
   width: 700px;
+}
+
+#choices {
+  display: flex;
+  flex-direction: column;
 }

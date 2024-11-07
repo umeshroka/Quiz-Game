@@ -36,9 +36,11 @@ let relevantQuestions = [];
 
 const allDivs = document.querySelectorAll('div');
 
-const startButton = document.querySelector('#start');
+const startContainer = document.querySelector('#start');
+const startButton = document.querySelector('#startButton');
 
 const categoryContainer = document.querySelector('#categoryContainer');
+const categoriesContainer = document.querySelector('#categories')
 
 const questionContainer = document.querySelector('#questionContainer');
 const question = document.querySelector('#question');
@@ -75,7 +77,7 @@ const showOnlyContainer = (...containers) => {
 }
 
 const init = () => {
-  showOnlyContainer(startButton);
+  showOnlyContainer(startContainer);
 }
 
 
@@ -83,7 +85,7 @@ const displayCategories = () => {
 
   showOnlyContainer(categoryContainer);
 
-  categoryContainer.innerHTML = '<h1 class="display-5">Choose Your Category</h1>';
+  categoriesContainer.innerHTML = '';
 
   for (let i = 0; i < myCategories.length; i++) {
 
@@ -95,7 +97,7 @@ const displayCategories = () => {
       categories.classList.add("btn");
       categories.classList.add("btn-outline-success");
       categories.classList.add("btn-lg");
-      categoryContainer.appendChild(categories);
+      categoriesContainer.appendChild(categories);
       categories.addEventListener('click', chooseCategory)
 
     }
@@ -211,7 +213,7 @@ const displayBudgetTable = () => {
     totalCost += cost;
 
     const costCell = document.createElement('td');
-    costCell.textContent = `$${cost}`; 
+    costCell.textContent = `$${cost.toLocaleString()}`; 
     row.appendChild(costCell);
 
     budgetTableBody.appendChild(row);
@@ -228,7 +230,7 @@ const displayBudgetTable = () => {
   totalRow.appendChild(totalHoursCell);
 
   const totalCostCell = document.createElement('td');
-  totalCostCell.textContent = `$${totalCost}`; // Format total cost as currency
+  totalCostCell.textContent = `$${totalCost.toLocaleString()}`; // Format total cost as currency
   totalRow.appendChild(totalCostCell);
 
   budgetTableBody.appendChild(totalRow);
@@ -250,7 +252,7 @@ const displayBudgetTable = () => {
     question.textContent = '';
     answerButtons.forEach(button => button.textContent = '');
   
-    showOnlyContainer(startButton);
+    showOnlyContainer(start);
   }
   
 

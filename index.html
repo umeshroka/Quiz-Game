@@ -14,12 +14,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
     <div id="start">
-      <button class="btn btn-outline-success btn-lg">Start Quiz!</button>
+      <h1 class="display-5">Project Budget Estimator Quiz</h1>
+      <section>
+        <button id="startButton" class="btn btn-outline-success btn-lg">Start Quiz!</button>
+      </section>
     </div>
     
 
     <div id="categoryContainer">
-      <!-- Dynamically insert categories here -->
+      <h1 class="display-5">Choose Your Category</h1>
+      <section id="categories">
+        <!-- Dynamically insert categories here -->
+      </section>
     </div>
 
     <div id="questionContainer">
@@ -36,7 +42,7 @@
 
     <div id="resultContainer">
       <p id="results" class="lead"></p>
-      <p id="explanation" class="lead"></p>
+      <p id="explanation"></p>
     </div>
 
     <div id="nextQuestionContainer">
@@ -48,13 +54,18 @@
     </div>
 
     <div id="quizEnd">
-      <h1 id="completed" class="display-6">Quiz Completed!</h1>
-
-      <button id="budget" class="btn btn-outline-success btn-lg">Get budget</button>
+      <h1 id="completed">Quiz Completed!</h1>
+      <section>
+        <button id="budget" class="btn btn-outline-success btn-lg">Get budget</button>
+      </section>
     </div>
 
     <div id="budgetTable">
-      <table id="table" class="table table-success table-striped table-bordered border-success">
+      <section>
+        <h1 class="display-5">Estimated Budget</h1>
+      </section>
+  
+      <table id="table" class="table table-dark table-striped table-bordered border-success">
 
         <thead>
           <tr>
