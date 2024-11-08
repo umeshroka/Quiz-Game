@@ -1,5 +1,19 @@
 # Quiz game
 
+Screenshot/Logo
+
+Game Name: description and what it deos. background info about the game and why you chose it 
+
+Getting started: include link to deployed game and instructions you deem important. Link to planning materials 
+
+Attributions: Link to any external resources
+
+Technologies Used
+
+Next steps: stretch goals 
+
+
+
 The idea is to create a project price estimator quiz.
 
 The client will take the quiz to test their understanding of the various aspects and problems.
@@ -49,7 +63,7 @@ The cost will be tallied up based on cost/hour and then, a final budget with hou
 
 # wireframes / html + css
 
-![wireframe](/Wireframe.jpg)
+![wireframe](assets/Wireframe.jpg)
 
 # model / state
 
