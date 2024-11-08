@@ -84,7 +84,7 @@ const showOnlyContainer = (...containers) => {
   });
 }
 ```
-
+- Currently, my code can handle any number of categories, any number of questions and the table will update accordingly. 
 
 ## Can do better
 - After doing the project, I realised I probably did not need to create a `const myCategories`. I could have just created it as a state/variable by filtering out the categories from the questions.
