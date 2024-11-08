@@ -26,11 +26,9 @@ const fanfare = new Audio ("/tada-fanfare-a-6313.mp3")
 let currentCategoryIndex;
 let CategoryCount = 0;
 
-
 let currentQuestion;
 let currentQuestionIndex = 0;
 let relevantQuestions = [];
-
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -79,7 +77,6 @@ const showOnlyContainer = (...containers) => {
 const init = () => {
   showOnlyContainer(startContainer);
 }
-
 
 const displayCategories = () => {
 
@@ -133,7 +130,6 @@ const displayQuestion = () => {
     answerButtons[i].disabled = false;
   } 
 }
-
 
 const checkAnswer = (event) => {
   
